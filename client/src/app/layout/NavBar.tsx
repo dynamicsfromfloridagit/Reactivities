@@ -1,36 +1,38 @@
-import MenuIcon from '@mui/icons-material/Menu'
-import { Box, AppBar, Toolbar, Typography, Button, } from '@mui/material'
-import { IconButton } from '@mui/material';
+import { Group } from "@mui/icons-material";
+import { Box, AppBar, Toolbar, Typography, Container, MenuItem, MenuList } from "@mui/material"; 
+import { NavLink } from "react-router";
+import MenuItemLink from "../shared/components/MenuItemLink";
 
-type Props = {
-    openForm: () => void;
+export default function NavBar() {
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static" sx={{ backgroundImage: 'linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)' }}>
+                <Container maxWidth='xl'>
+                    <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <MenuList>
+                            <MenuItem component={NavLink} to='/' sx={{ display: 'flex', gap: 2 }}>
+                                <Group fontSize='large' />
+                                <Typography variant="h4" fontWeight='bold'>Reactivities</Typography>
+                            </MenuItem>
+                        </MenuList>
+                        <MenuList sx={{display: 'flex'}}>
+                            <MenuItemLink  to='/activities'>
+                                Activities
+                            </MenuItemLink>
+                            <MenuItemLink to='/createActivity'>
+                                Create Activity
+                            </MenuItemLink>
+                        </MenuList>
+                        <MenuList>
+                          <MenuItem>
+                            User menu
+                        </MenuItem>
+                        </MenuList>
+                        
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </Box>
+    )
 }
 
-export default function NavBar({openForm}: Props) {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Reactivities
-          </Typography>
-          <Button 
-            size="large"
-            variant='contained'
-            color="warning" 
-            onClick={openForm}
-            >Create activity</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  )
-}

@@ -1,22 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import agent from "../api/agent";
-//import axios from "axios";
 
+export const useActivities = (id?: string) => {
+    const queryClient = useQueryClient();
 
-export const useActivities = () => {
-     const queryClient = useQueryClient();
-
-    const { data: activities, isPending } = useQuery({
+    const { isPending, data: activities } = useQuery({
         queryKey: ['activities'],
         queryFn: async () => {
-            // 
-            const response =  await agent.get<Activity[]>('/activities'); //await axios.get<Activity[]>('https://localhost:5001/api/activities');
+            const response = await agent.get<Activity[]>('/activities');
             return response.data;
         }
     });
- 
-const updateActivity = useMutation({
+
+    const { isLoading: isLoadingActivity, data: activity } = useQuery<Activity>({
+        queryKey: ['activities', id],
+        queryFn: async () => {
+            const response = await agent.get<Activity>(`/activities/${id}`);
+            return response.data;
+        },
+        enabled: !!id
+    });
+
+    const updateActivity = useMutation({
         mutationFn: async (activity: Activity) => {
             await agent.put('/activities', activity);
         },
@@ -27,10 +32,9 @@ const updateActivity = useMutation({
         }
     });
 
-const createActivity = useMutation({
+    const createActivity = useMutation({
         mutationFn: async (activity: Activity) => {
             const response = await agent.post('/activities', activity);
-            console.log(response);
             return response.data;
         },
         onSuccess: async () => {
@@ -40,7 +44,7 @@ const createActivity = useMutation({
         }
     })
 
- const deleteActivity = useMutation({
+    const deleteActivity = useMutation({
         mutationFn: async (id: string) => {
             await agent.delete(`/activities/${id}`);
         },
@@ -56,9 +60,8 @@ const createActivity = useMutation({
         isPending,
         updateActivity,
         createActivity,
-        deleteActivity
+        deleteActivity,
+        activity,
+        isLoadingActivity
     }
-
 }
-
-    

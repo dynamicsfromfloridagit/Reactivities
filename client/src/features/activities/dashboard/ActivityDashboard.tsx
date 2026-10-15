@@ -1,54 +1,15 @@
-import Grid from '@mui/material/Grid';
-import ActivityList from './ActivityList';
-import ActivityDetails from '../details/ActivityDetails';
-import ActivityForm from '../form/ActivityForm';
+import { Grid } from "@mui/material";
+import ActivityList from "./ActivityList";
 
-type Props ={
-    activities:Activity[]
-    selectActivity: (id: string) => void
-    cancelSelectActivity: () => void
-    selectedActivity?: Activity
-    openForm: (id: string) => void
-    closeForm: () => void
-    editMode: boolean
-    
-}
-
-export default function ActivityDashboard({
-  activities,
-  selectActivity,
-  selectedActivity, 
-  cancelSelectActivity, 
-  closeForm, 
-  openForm, 
-  editMode,
-
-}: Props) {
-  return (
-    <Grid container spacing={3}>
-      <Grid size={7}>
-        <ActivityList 
-        activities={activities}
-        selectActivity={selectActivity}
-        
-        ></ActivityList>
-      </Grid>
-      <Grid size={5}>
-        { selectedActivity && !editMode &&
-        <ActivityDetails 
-        selectedActivity={selectedActivity} 
-        cancelSelectActivity={cancelSelectActivity}
-        openForm={openForm}
-        />}
-        {editMode &&
-        <ActivityForm
-          closeForm={closeForm} 
-          activity={selectedActivity} 
-        
-        />
-        }
-      </Grid>
-
-    </Grid>
-  );
+export default function ActivityDashboard() {
+    return (
+        <Grid container spacing={3}>
+            <Grid size={7}>
+                <ActivityList />
+            </Grid>
+            <Grid size={5}>
+                Activity filters go here
+            </Grid>
+        </Grid>
+    )
 }
