@@ -5,6 +5,7 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 
 import ActivityDetailsPage from "../../features/activities/details/ActivityDetailsPage";
 import ActivityForm from "../../features/activities/form/ActivityForm";
+import Counter from "../../features/counter/Counter";
 //import type { JSX } from "react/jsx-runtime";
 
 export const router = createBrowserRouter([
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
             { path: 'activities/:id', element: <ActivityDetailsPage/> },
             { path: 'createActivity', element: <ActivityForm key='create' /> },
             { path: 'manage/:id', element: <ActivityForm /> },
+            { path: 'counter', element: <Counter /> },
         ]
     },
 ]);
